@@ -21,7 +21,7 @@ const secret = process.env.JWT_SECRET;
 
 app.use(morgan('dev'));
 app.use(helmet());
-app.use(cors({ credentials: true, origin: 'https://thunderblog1.vercel.app' }));
+app.use(cors({ credentials: true, origin: true }));
 app.use(express.json());
 app.use(cookieParser());
 
