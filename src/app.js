@@ -34,7 +34,7 @@ app.post('/login', async (req, res) => {
     const findAuthor = await userCollection.findOne({ 'Email': email, 'Password': password });
     if (findAuthor) {
         const token = jwt.sign({ name: findAuthor.Name, id: findAuthor._id, email }, secret, { expiresIn: '1h' });
-        res.cookie('token', token, { httpOnly: true }).json('ok');
+        res.cookie('token', token, { httpOnly: true, secure: true }).json('ok');
     } else {
         res.status(400).json('Wrong info, try again');
     }
