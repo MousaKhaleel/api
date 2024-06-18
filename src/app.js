@@ -59,17 +59,18 @@ app.post('/register', async (req, res) => {
 app.get('/profile', (req, res) => {
     const token = req.cookies.token;
     if (!token) {
-        return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(401).json({ message: "Unauthorized" });
     }
-
-    jwt.verify(token, secret, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
-        res.json(decoded);
+  
+    const leeway = 60;
+    jwt.verify(token, secret, { maxAge: '1h', clockSkew: leeway }, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+  
+      res.json(decoded);
     });
-});
+  });
 
 app.post('/logout', (req, res) => {
     res.clearCookie('token').json('ok');
