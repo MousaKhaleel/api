@@ -67,7 +67,7 @@ app.get('/profile', (req, res) => {
             return res.status(401).json({ message: 'Unauthorized' });
         }
 
-        res.json(decoded);
+        res.json(decoded).cookie('token', token, { httpOnly: true, secure: true });
     });
 });
 
